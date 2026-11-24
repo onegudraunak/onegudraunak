@@ -1,122 +1,69 @@
-import { FaNodeJs } from "react-icons/fa";
-import { RiReactjsLine } from "react-icons/ri";
-import {
-  SiMongodb,
-  SiPython,
-  SiFlutter,
-  SiHtml5,
-  SiCss3,
-  SiJavascript,
-  SiBootstrap,
-  SiTailwindcss,
-} from "react-icons/si";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
+import { SKILL_GROUPS } from "../constants";
 
-// Function to create smooth bounce animation
-const iconVariants = (duration) => ({
-  initial: { y: -10 },
-  animate: {
-    y: [10, -10],
-    transition: {
-      duration,
-      ease: "easeInOut",
-      repeat: Infinity,
-      repeatType: "reverse",
-    },
-  },
-});
+function SkillCard({ group, index }) {
+  const reduceMotion = useReducedMotion();
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const smoothPointerX = useSpring(pointerX, { stiffness: 150, damping: 20, mass: 0.45 });
+  const smoothPointerY = useSpring(pointerY, { stiffness: 150, damping: 20, mass: 0.45 });
+  const rotateY = useTransform(smoothPointerX, [-0.5, 0.5], reduceMotion ? [0, 0] : [-8, 8]);
+  const rotateX = useTransform(smoothPointerY, [-0.5, 0.5], reduceMotion ? [0, 0] : [6, -6]);
+
+  const trackPointer = (event) => {
+    if (reduceMotion || event.pointerType === "touch") return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width;
+    const y = (event.clientY - bounds.top) / bounds.height;
+    pointerX.set(x - 0.5);
+    pointerY.set(y - 0.5);
+    event.currentTarget.style.setProperty("--pointer-x", `${x * 100}%`);
+    event.currentTarget.style.setProperty("--pointer-y", `${y * 100}%`);
+  };
+
+  const resetPointer = (event) => {
+    pointerX.set(0);
+    pointerY.set(0);
+    event.currentTarget.style.setProperty("--pointer-x", "50%");
+    event.currentTarget.style.setProperty("--pointer-y", "50%");
+  };
+
+  return (
+    <motion.article
+      className="skill-group"
+      style={{ rotateX, rotateY, transformPerspective: 1000 }}
+      onPointerMove={trackPointer}
+      onPointerLeave={resetPointer}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      whileHover={reduceMotion ? undefined : { y: -7, scale: 1.015, transition: { duration: 0.2, delay: 0 } }}
+      viewport={{ once: true, amount: 0.35 }}
+      transition={{ duration: 0.55, delay: index * 0.1 }}
+    >
+      <div className="skill-group-content">
+        <div className="skill-group-heading"><span>{String(index + 1).padStart(2, "0")}</span><h3>{group.title}</h3></div>
+        <div className="skill-list">
+          {group.skills.map((skill) => (
+            <div className="skill-row" key={skill}>
+              <span>{skill}</span><span className="skill-check" aria-hidden="true">↗</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </motion.article>
+  );
+}
 
 export default function Technologies() {
   return (
-    <div className="pb-24">
-      {/* Section Heading */}
-      <motion.h2
-        whileInView={{ opacity: 1, y: 0 }}
-        initial={{ opacity: 0, y: -50 }}
-        transition={{ duration: 1 }}
-        className="my-20 text-center text-4xl"
-      >
-        Technologies
-      </motion.h2>
-
-      {/* Icons Container */}
-      <motion.div
-        className="flex flex-wrap items-center justify-center gap-8 px-4"
-        whileInView={{ opacity: 1, x: 0 }}
-        initial={{ opacity: 0, x: -50 }}
-        transition={{ duration: 1.2 }}
-      >
-        {/* Technology Icons with Titles */}
-        {[
-          {
-            Icon: SiHtml5,
-            color: "text-orange-600",
-            title: "HTML5",
-            duration: 3,
-          },
-          { Icon: SiCss3, color: "text-blue-600", title: "CSS3", duration: 4 },
-          {
-            Icon: SiJavascript,
-            color: "text-yellow-500",
-            title: "JavaScript",
-            duration: 3.5,
-          },
-          {
-            Icon: SiBootstrap,
-            color: "text-purple-600",
-            title: "Bootstrap",
-            duration: 1,
-          },
-          {
-            Icon: FaNodeJs,
-            color: "text-green-500",
-            title: "Node.js",
-            duration: 5,
-          },
-          {
-            Icon: SiMongodb,
-            color: "text-green-600",
-            title: "MongoDB",
-            duration: 3,
-          },
-          {
-            Icon: RiReactjsLine,
-            color: "text-cyan-400",
-            title: "React.js",
-            duration: 2.5,
-          },
-          {
-            Icon: SiTailwindcss,
-            color: "text-teal-500",
-            title: "Tailwind CSS",
-            duration: 2.5,
-          },
-          {
-            Icon: SiPython,
-            color: "text-yellow-500",
-            title: "Python",
-            duration: 2,
-          },
-          {
-            Icon: SiFlutter,
-            color: "text-blue-500",
-            title: "Flutter",
-            duration: 2.5,
-          },
-        ].map(({ Icon, color, title, duration }, index) => (
-          <div key={index} className="flex flex-col items-center">
-            <motion.div
-              initial="initial"
-              animate="animate"
-              variants={iconVariants(duration)}
-              className="text-7xl hover:scale-110 transition-transform duration-300"
-            >
-              <Icon className={`${color}`} />
-            </motion.div>
-            <p className="m-2 text-lg font-medium">{title}</p>
-          </div>
-        ))}
-      </motion.div>
+    <div>
+      <div className="section-heading skill-heading">
+        <div><p className="eyebrow"><span /> PLAYER LOADOUT / 02</p><h2>Select your<br /><em>loadout.</em></h2></div>
+        <p className="section-intro">The practical hardware, support, and networking skills I use to keep devices and business systems running.</p>
+      </div>
+      <div className="skill-groups">
+        {SKILL_GROUPS.map((group, index) => <SkillCard group={group} index={index} key={group.title} />)}
+      </div>
     </div>
   );
 }

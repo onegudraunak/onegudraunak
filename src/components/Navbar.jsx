@@ -1,146 +1,57 @@
 import { useState } from "react";
-import {
-  FaBars,
-  FaTimes,
-  FaGithub,
-  FaInstagram,
-  FaLinkedin,
-} from "react-icons/fa";
-import logo from "../assets/projects/RG.png";
+import { FaBars, FaTimes } from "react-icons/fa";
 
-export default function Navbar() {
+const LINKS = [
+  ["hero", "PROFILE"],
+  ["services", "MISSION ACCOMPLISHED"],
+  ["technologies", "LOADOUT"],
+  ["work", "STORY"],
+  ["contact", "CONTACT"],
+];
+
+export default function Navbar({ activeSection, clock, wantedLevel }) {
   const [isOpen, setIsOpen] = useState(false);
-
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    setIsOpen(false); // Close menu on click (for mobile)
+    setIsOpen(false);
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-black text-white z-50 shadow-md">
-      <div className="container mx-auto flex items-center justify-between px-6 py-4">
-        {/* Logo */}
-        <a href="/" aria-label="Home">
-          <img src={logo} alt="logo" className="h-10 w-auto" />
-        </a>
-
-        {/* Navigation Menu (Desktop - Centered) */}
-        <div className="hidden md:flex space-x-8 text-lg font-semibold">
-          <button
-            onClick={() => scrollToSection("hero")}
-            className="hover:text-gray-300"
-          >
-            Home
-          </button>
-          <button
-            onClick={() => scrollToSection("technologies")}
-            className="hover:text-gray-300"
-          >
-            Technologies
-          </button>
-          <button
-            onClick={() => scrollToSection("projects")}
-            className="hover:text-gray-300"
-          >
-            Projects
-          </button>
-          <button
-            onClick={() => scrollToSection("work")}
-            className="hover:text-gray-300"
-          >
-            Work
-          </button>
-          <button
-            onClick={() => scrollToSection("contact")}
-            className="hover:text-gray-300"
-          >
-            Contact
-          </button>
-        </div>
-
-        {/* Social Icons (Always Visible) */}
-        <div className="flex space-x-4 text-2xl">
-          <a
-            href="https://linkedin.com/in/raunak-gaggar-aba2401ab/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaLinkedin />
-          </a>
-          <a
-            href="https://github.com/Raunak94"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaGithub />
-          </a>
-          <a
-            href="https://www.instagram.com/codewithraunak/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaInstagram />
-          </a>
-
-          {/* Hamburger Menu Button (Mobile) */}
-        </div>
-        <button
-          className="md:hidden text-white focus:outline-none"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <FaTimes size={28} /> : <FaBars size={28} />}
+    <nav className="site-navbar" aria-label="Main navigation">
+      <div className="nav-inner game-container">
+        <button className="nav-logo" onClick={() => scrollToSection("hero")} aria-label="Return to player profile">
+          <span className="logo-emblem">RG</span>
+          <span className="logo-copy"><b>RAUNAK GAGGAR</b><small>PLAYER PROFILE / 001</small></span>
         </button>
-      </div>
 
-      {/* Collapsible Menu (Mobile) */}
-      <div
-        className={`md:hidden bg-black w-full absolute top-16 left-0 transition-all duration-300 ${
-          isOpen ? "block" : "hidden"
-        }`}
-      >
-        <ul className="flex flex-col items-center text-lg font-semibold space-y-4 py-4">
-          <li>
-            <button
-              onClick={() => scrollToSection("hero")}
-              className="hover:text-gray-300"
-            >
-              Home
+        <div className="nav-links" aria-label="Portfolio menu">
+          {LINKS.map(([id, label]) => (
+            <button className={`nav-link${activeSection === id ? " is-active" : ""}`} key={id} onClick={() => scrollToSection(id)} aria-current={activeSection === id ? "location" : undefined}>
+              {label}
             </button>
-          </li>
-          <li>
-            <button
-              onClick={() => scrollToSection("technologies")}
-              className="hover:text-gray-300"
-            >
-              Technologies
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => scrollToSection("projects")}
-              className="hover:text-gray-300"
-            >
-              Projects
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => scrollToSection("work")}
-              className="hover:text-gray-300"
-            >
-              Work
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => scrollToSection("contact")}
-              className="hover:text-gray-300"
-            >
-              Contact
-            </button>
-          </li>
-        </ul>
+          ))}
+        </div>
+
+        <div className="nav-hud">
+          <div className="nav-clock"><small>NAGPUR / IST</small><b>{clock}</b></div>
+          <div className="wanted-meter" aria-label={`Wanted level ${wantedLevel} of 5`}>
+            <small>HEAT</small>
+            <span className="wanted-stars">{Array.from({ length: 5 }, (_, index) => <i className={index < wantedLevel ? "is-lit" : ""} key={index}>★</i>)}</span>
+          </div>
+          <button className="nav-toggle" onClick={() => setIsOpen((open) => !open)} aria-label={isOpen ? "Close navigation" : "Open navigation"} aria-expanded={isOpen} aria-controls="mobile-navigation">
+            {isOpen ? <FaTimes size={18} /> : <FaBars size={18} />}
+          </button>
+        </div>
       </div>
+      {isOpen && (
+        <div id="mobile-navigation" className="mobile-links game-container">
+          {LINKS.map(([id, label], index) => (
+            <button className={activeSection === id ? "is-active" : ""} key={id} onClick={() => scrollToSection(id)}>
+              <span>0{index + 1}</span>{label}<b>↗</b>
+            </button>
+          ))}
+        </div>
+      )}
     </nav>
   );
 }

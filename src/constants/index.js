@@ -1,67 +1,102 @@
 import project1 from "../assets/projects/netflix.png";
 import project2 from "../assets/projects/lyrics2.png";
-import project3 from "../assets/projects/RG.png";
+import computechLogo from "../assets/brands/computech-logo.jpeg";
+import dreamplayImage from "../assets/brands/dreamplay.png";
 
 export const EXPERIENCES = [
   {
-    year: "2016 - Present",
-    role: "Founder and Owner",
+    year: "May 2016 — Present",
+    role: "Founder & Owner",
     company: "Computech Nagpur",
+    logo: computechLogo,
+    logoAlt: "Computech computer and IT services logo",
     description: [
-      `Founded and managed a successful computer sales and service business,delivering IT solutions to both B2B and B2C clients`,
-      `Provided software installation, remote desktop configuration, and end-to-end network setup, including LAN cabling and infrastructure mapping`,
-      `Conducted on-site inspections and troubleshooting for corporate clients,optimizing networking systems and server performance.`,
-      `Delivered comprehensive technical support, resolving hardware and software issues, managing system installations, and overseeing upgrades.`,
+      "Founded and manage a computer sales and service business serving both business and individual clients, with a 4.9-star Google rating.",
+      "Install software, configure remote desktops, and build end-to-end networks with LAN cabling and infrastructure maps.",
+      "Inspect client sites and troubleshoot network and server issues to improve performance.",
+      "Resolve hardware and software problems, install systems, and plan upgrades for client teams.",
     ],
+    detail:
+      "Client sectors: finance · IT · education · transportation · healthcare · retail",
   },
   {
-    year: "2020 - 2024",
-    role: "Co-Founder and Technology Head",
+    year: "Feb 2020 — Aug 2024",
+    role: "Co-Founder & Technology Head",
     company: "Dreamplay Nagpur",
+    image: dreamplayImage,
+    imageAlt: "Dreamplay family entertainment and play brand artwork",
     description: [
-      "Co-founded and managed a leading kids' entertainment center featuring Virtual Reality experiences and a soft play area",
-      "Designed and built a custom VR infrastructure, including high-performance gaming PCs, VR headsets, projector displays, and multiplayer gaming networks.",
-      "Managed and maintained the entire network ecosystem, including configuring routers, switches, VR headsets, and CPUs, while developing network maps for efficient troubleshooting and performance optimization",
-      "Led a team of 3-5 employees, overseeing daily operations, optimizing processes, and ensuring exceptional customer satisfaction",
-      "Assisted customers with VR equipment setup, game navigation, and safety guidelines for an immersive experience.",
-      "Led promotional activities, introduced new VR games, and organized special events to enhance customer engagement.",
+      "Co-founded and operated a children's entertainment center with virtual reality experiences and a soft-play area.",
+      "Designed and built custom VR infrastructure with gaming PCs, VR headsets, projectors, and multiplayer networks.",
+      "Managed routers, switches, CPUs, and network maps, troubleshooting issues and optimizing performance.",
+      "Led a team of 3–5, improved daily operations, and helped guests set up equipment and play safely.",
+      "Introduced VR games and organized promotions and special events to engage customers.",
     ],
   },
 ];
 
 export const PROJECTS = [
   {
-    title: "Netflix clone",
+    title: "Netflix Clone",
     image: project1,
+    href: "https://raunak94.github.io/netflix-clone/",
     description:
-      "Developed a full-stack Netflix clone with core features like browsing, adding, updating, and deleting titles. Built a responsive front-end using JavaScript, HTML, and CSS, and a robust back-end with Node.js and MongoDB. Deployed and maintained the project on GitHub for version control and collaboration.",
-    technologies: [
-      "HTML",
-      "CSS",
-      "Javascript",
-      "Node.js",
-      "MongoDB",
-      "Reactjs",
-    ],
+      "A responsive, full-stack streaming catalogue with title browsing and add, update, and delete flows. Built with JavaScript, HTML, CSS, Node.js, and MongoDB.",
+    technologies: ["JavaScript", "HTML", "CSS", "Node.js", "MongoDB"],
   },
   {
     title: "Lyrics Now",
     image: project2,
+    href: "https://github.com/Raunak94/Playing_songs_and_fetch_lyrics",
     description:
-      "Designed and developed a python software that automatically retrieves lyrics for the currently playing song by integrating with music player APIs and online lyric databases",
-    technologies: ["Python"],
-  },
-  {
-    title: "Portfolio Website",
-    image: project3,
-    description:
-      "A personal portfolio website showcasing projects, skills, and contact information.",
-    technologies: ["HTML", "CSS", "React", "Bootstrap", "Tailwind CSS"],
+      "A Python application that finds lyrics for the currently playing track by connecting music-player APIs with online lyric databases.",
+    technologies: ["Python", "Music APIs", "Automation"],
   },
 ];
 
+export const SKILL_GROUPS = [
+  {
+    title: "Hardware & support",
+    skills: [
+      "PC and laptop repair",
+      "Hardware diagnostics",
+      "Component replacement",
+      "Operating system installation",
+      "Remote desktop configuration",
+    ],
+  },
+  {
+    title: "Networks & infrastructure",
+    skills: [
+      "LAN/WAN setup and configuration",
+      "Network troubleshooting",
+      "Router and switch configuration",
+      "IP addressing and subnetting",
+      "Wireless setup and security",
+    ],
+  },
+  {
+    title: "Systems & operations",
+    skills: [
+      "Software and operating system setup",
+      "Infrastructure mapping",
+      "Business IT support",
+      "Computer sales and service",
+      "VR systems and multiplayer networks",
+    ],
+  },
+];
+
+export const EDUCATION = {
+  degree: "Bachelor of Computer Applications (BCA)",
+  college: "VMV (Vrajlal Manilal Vasant) College",
+  location: "Nagpur",
+  years: "Mar 2012 — Mar 2015",
+};
+
 export const CONTACT = {
-  address: "Nagpur India ",
-  phoneNo: "+91-9766128875",
-  email: "raunakgaggar94@gmail.com",
+  address: "Nagpur, India",
+  phoneNo: "+91 97661 28875",
+  phoneHref: "+919766128875",
+  email: "onegudraunak@gmail.com",
 };
