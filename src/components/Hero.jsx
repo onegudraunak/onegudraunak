@@ -110,7 +110,7 @@ export default function Hero() {
               <div><p className="resume-viewer-kicker">DOCUMENT / RESUME</p><h2 id="resume-viewer-title">Raunak Gaggar</h2></div>
               <button className="resume-viewer-close" type="button" autoFocus onClick={() => setResumeOpen(false)} aria-label="Close resume viewer">Close <span aria-hidden="true">×</span></button>
             </header>
-            <iframe className="resume-viewer-frame" src="/resume.pdf#toolbar=1&navpanes=0&view=FitH" title="Raunak Gaggar resume" />
+            <iframe className="resume-viewer-frame" src={`${import.meta.env.BASE_URL}resume.pdf#toolbar=1&navpanes=0&view=FitH`} title="Raunak Gaggar resume" />
           </section>
         </div>
       )}
