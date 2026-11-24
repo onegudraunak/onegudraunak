@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="boot-loading">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,7 +9,19 @@
     <title>Raunak Gaggar — Technology, Networks &amp; Software</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="boot-loader" class="boot-loader" role="status" aria-live="polite" aria-label="Loading Raunak Gaggar portfolio">
+      <div class="boot-loader__card">
+        <div class="boot-loader__topline"><span>PLAYER PROFILE / 001</span><span>BOOT SEQUENCE</span></div>
+        <div class="boot-loader__radar" aria-hidden="true"><span class="boot-loader__radar-sweep"></span><span class="boot-loader__monogram">RG</span><i class="boot-loader__orbit-dot"></i></div>
+        <p class="boot-loader__eyebrow">RAUNAK GAGGAR <span>·</span> NAGPUR, INDIA</p>
+        <h1 class="boot-loader__title">Preparing<br /><em>your profile.</em></h1>
+        <p class="boot-loader__copy">Loading player data and calibrating the city.</p>
+        <div class="boot-loader__track" aria-hidden="true"><span></span></div>
+        <div class="boot-loader__status"><span><i></i> INITIALIZING PROFILE</span><b>PLEASE WAIT</b></div>
+      </div>
+      <div class="boot-loader__footer"><span>LEONIDA SYSTEM</span><span>PERSONNEL / 001</span></div>
+    </div>
+    <div id="root" aria-hidden="true" aria-busy="true"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

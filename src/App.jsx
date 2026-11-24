@@ -104,6 +104,48 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    const loader = document.getElementById("boot-loader");
+    if (!loader) return undefined;
+
+    let cancelled = false;
+    let removeTimer;
+    const startedAt = performance.now();
+    const pageReady = document.readyState === "complete"
+      ? Promise.resolve()
+      : new Promise((resolve) => window.addEventListener("load", resolve, { once: true }));
+    const fontsReady = document.fonts?.ready || Promise.resolve();
+    const imagesReady = Promise.all(
+      Array.from(document.images)
+        .filter((image) => image.loading !== "lazy")
+        .map((image) => image.complete
+          ? Promise.resolve()
+          : new Promise((resolve) => {
+              image.addEventListener("load", resolve, { once: true });
+              image.addEventListener("error", resolve, { once: true });
+            })),
+    );
+    const minimumDisplay = new Promise((resolve) => window.setTimeout(resolve, 720));
+
+    Promise.all([pageReady, fontsReady, imagesReady, minimumDisplay]).then(() => {
+      if (cancelled) return;
+      const remaining = Math.max(0, 980 - (performance.now() - startedAt));
+      window.setTimeout(() => {
+        if (cancelled) return;
+        loader.classList.add("boot-loader--exit");
+        document.documentElement.classList.remove("boot-loading");
+        const root = document.getElementById("root");
+        root?.removeAttribute("aria-hidden");
+        root?.setAttribute("aria-busy", "false");
+        removeTimer = window.setTimeout(() => loader.remove(), 620);
+      }, remaining);
+    });
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(removeTimer);
+    };
+  }, []);
+  useEffect(() => {
     const sections = document.querySelectorAll("[data-mission]");
     const observer = new IntersectionObserver((entries) => {
       const visible = entries
