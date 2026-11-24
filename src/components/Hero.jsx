@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import profilePic from "../assets/raunak-studio.png";
 
 export default function Hero() {
-  const [resumeOpen, setResumeOpen] = useState(false);
   const reduceMotion = useReducedMotion();
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
@@ -25,19 +23,6 @@ export default function Hero() {
     pointerY.set(0);
   };
 
-  useEffect(() => {
-    if (!resumeOpen) return undefined;
-    const previousOverflow = document.body.style.overflow;
-    const closeOnEscape = (event) => {
-      if (event.key === "Escape") setResumeOpen(false);
-    };
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", closeOnEscape);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", closeOnEscape);
-    };
-  }, [resumeOpen]);
 
   return (
     <div className="hero-grid">
@@ -62,7 +47,7 @@ export default function Hero() {
         <div className="hero-tags"><span>HARDWARE</span><span>NETWORKS</span><span>VR SYSTEMS</span></div>
         <div className="hero-actions">
           <a className="primary-action" href="#services">Start exploring <span>↘</span></a>
-          <button className="secondary-action resume-open-trigger" type="button" onClick={() => setResumeOpen(true)}>View player file <span>↗</span></button>
+          <a className="secondary-action" href={`${import.meta.env.BASE_URL}resume.pdf`} target="_blank" rel="noopener noreferrer">Open resume <span aria-hidden="true">↗</span></a>
         </div>
         <div className="hero-note"><span className="note-line" /> REAL WORLD EXPERIENCE // NAGPUR, INDIA</div>
       </motion.div>
@@ -101,19 +86,6 @@ export default function Hero() {
         <div className="card-orbit orbit-two" aria-hidden="true" />
       </div>
 
-      {resumeOpen && (
-        <div className="resume-viewer-backdrop" role="presentation" onMouseDown={(event) => {
-          if (event.target === event.currentTarget) setResumeOpen(false);
-        }}>
-          <section className="resume-viewer" role="dialog" aria-modal="true" aria-labelledby="resume-viewer-title">
-            <header className="resume-viewer-header">
-              <div><p className="resume-viewer-kicker">DOCUMENT / RESUME</p><h2 id="resume-viewer-title">Raunak Gaggar</h2></div>
-              <button className="resume-viewer-close" type="button" autoFocus onClick={() => setResumeOpen(false)} aria-label="Close resume viewer">Close <span aria-hidden="true">×</span></button>
-            </header>
-            <iframe className="resume-viewer-frame" src={`${import.meta.env.BASE_URL}resume.pdf#toolbar=1&navpanes=0&view=FitH`} title="Raunak Gaggar resume" />
-          </section>
-        </div>
-      )}
     </div>
   );
 }
