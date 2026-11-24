@@ -14,7 +14,7 @@ export default function Contact() {
         <a href={`tel:${CONTACT.phoneHref}`}><span>PHONE</span>{CONTACT.phoneNo}<b>↗</b></a>
         <div><span>BASED IN</span>{CONTACT.address}<b>⌖</b></div>
         <div className="contact-socials">
-          <a href="https://github.com/Raunak94" target="_blank" rel="noopener noreferrer">GITHUB ↗</a>
+          <a href="https://github.com/onegudraunak" target="_blank" rel="noopener noreferrer">GITHUB ↗</a>
           <a href="https://www.linkedin.com/in/raunak-gaggar-743721188/" target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a>
           <a href="https://www.instagram.com/pc_laptop_repair_professional/" target="_blank" rel="noopener noreferrer">INSTAGRAM ↗</a>
         </div>
